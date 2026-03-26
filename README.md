@@ -48,6 +48,11 @@ npm run dev
 ```
 *The frontend will start on `http://localhost:5173`. Open this URL in your browser.*
 
+If PowerShell blocks running npm scripts, use:
+```bash
+powershell -ExecutionPolicy Bypass -Command "npm run dev"
+```
+
 ## 🎯 Features Implemented (Meeting all Requirements)
 - ✅ **Full CRUD on Members:** GET, POST, PUT, DELETE on `/api/members`.
 - ✅ **Full CRUD on Tasks:** A complete Kanban board to manage tasks (/api/tasks).
