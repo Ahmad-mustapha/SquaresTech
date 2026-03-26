@@ -1,4 +1,4 @@
-import { ArrowRight, Pencil, Trash2, User as UserIcon } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Pencil, Trash2, User as UserIcon } from 'lucide-react';
 import type { Member, Task } from './types';
 
 const TaskCard = ({
@@ -14,6 +14,13 @@ const TaskCard = ({
   onDelete: (task: Task) => void;
   onMove: (id: string, newStatus: Task['status']) => void;
 }) => {
+  const getMoveIcon = (target: Task['status']) => {
+    const order: Task['status'][] = ['todo', 'in_progress', 'done'];
+    const fromIndex = order.indexOf(task.status);
+    const toIndex = order.indexOf(target);
+    return toIndex < fromIndex ? ArrowLeft : ArrowRight;
+  };
+
   return (
     <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
       <div className="flex items-start justify-between gap-2 mb-2">
@@ -71,7 +78,10 @@ const TaskCard = ({
               style={{ backgroundColor: '#7c3aed', borderColor: '#6d28d9', color: '#ffffff' }}
               title="Move to To Do"
             >
-              <ArrowRight className="w-3.5 h-3.5 text-red-500" />
+              {(() => {
+                const Icon = getMoveIcon('todo');
+                return <Icon className="w-3.5 h-3.5" />;
+              })()}
             </button>
           )}
           {task.status !== 'in_progress' && (
@@ -81,7 +91,10 @@ const TaskCard = ({
               style={{ backgroundColor: '#7c3aed', borderColor: '#6d28d9', color: '#ffffff' }}
               title="Move to In Progress"
             >
-              <ArrowRight className="w-3.5 h-3.5" />
+              {(() => {
+                const Icon = getMoveIcon('in_progress');
+                return <Icon className="w-3.5 h-3.5" />;
+              })()}
             </button>
           )}
           {task.status !== 'done' && (
@@ -91,7 +104,10 @@ const TaskCard = ({
               style={{ backgroundColor: '#7c3aed', borderColor: '#6d28d9', color: '#ffffff' }}
               title="Move to Done"
             >
-              <ArrowRight className="w-3.5 h-3.5" />
+              {(() => {
+                const Icon = getMoveIcon('done');
+                return <Icon className="w-3.5 h-3.5" />;
+              })()}
             </button>
           )}
         </div>
