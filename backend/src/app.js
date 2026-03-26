@@ -8,7 +8,18 @@ const errorHandler = require("./middleware/errorHandler");
 const app = express();
 
 // Middlewares
-app.use(cors());
+const allowedOrigins = (process.env.CORS_ORIGINS || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+app.use(
+  cors(
+    allowedOrigins.length
+      ? { origin: allowedOrigins }
+      : undefined
+  )
+);
 app.use(morgan("dev"));
 app.use(express.json());
 
